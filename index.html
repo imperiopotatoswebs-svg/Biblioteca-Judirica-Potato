@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca Jurídica Potato</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+    <h1>⚖️ BIBLIOTECA JURÍDICA POTATO</h1>
+    <p>Repositorio oficial del Imperio Potato</p>
+    <p>Gobierno de Su Majestad Rey Potato IV</p>
+</header>
+
+<nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#codigo">Código Penal</a>
+    <a href="#historia">Historia</a>
+    <a href="#administracion">Administración</a>
+</nav>
+
+<main id="inicio">
+
+    <section class="bienvenida">
+        <h2>🏛️ Archivo Jurídico Imperial</h2>
+        <p>Repositorio oficial de las leyes y normas del Imperio Potato.</p>
+    </section>
+
+    <section id="codigo">
+        <h2>📜 Código Penal Potato</h2>
+        <p>Busca artículos por número, título o contenido.</p>
+        <input id="buscador" type="text"
+               placeholder="Buscar un artículo...">
+        <div id="resultados">Cargando artículos...</div>
+    </section>
+
+    <section id="historia">
+        <h2>🏰 Historia Imperial</h2>
+        <p>Archivo histórico y jurídico del Imperio Potato.</p>
+    </section>
+
+    <section id="administracion">
+        <h2>👑 Administración Imperial</h2>
+
+        <div id="login">
+            <h3>Acceso del administrador</h3>
+            <input id="email" type="email"
+                   placeholder="Correo electrónico">
+            <input id="password" type="password"
+                   placeholder="Contraseña">
+            <button id="loginBtn">Iniciar sesión</button>
+            <p id="loginMensaje"></p>
+            <hr>
+
+<h3>📚 Importar artículos</h3>
+
+<p>Selecciona un archivo CSV para cargar varios artículos.</p>
+
+<input
+    type="file"
+    id="archivoCSV"
+    accept=".csv"
+>
+
+<button id="importarCSV">
+    Importar artículos
+</button>
+
+<p id="estadoImportacion"></p>
+        </div>
+
+        <div id="panelAdmin" hidden>
+            <h3>Panel del Rey Potato IV</h3>
+            <p>Sesión de administrador iniciada.</p>
+
+            <h3 id="formTitulo">Crear nuevo artículo</h3>
+
+            <input id="numero" type="number"
+                   placeholder="Número del artículo">
+
+            <input id="titulo" type="text"
+                   placeholder="Título del artículo">
+
+            <input id="categoria" type="text"
+                   placeholder="Categoría">
+
+            <textarea id="contenido"
+                      placeholder="Contenido de la ley"></textarea>
+
+            <button id="guardarBtn">Guardar artículo</button>
+            <button id="cancelarBtn" hidden>Cancelar edición</button>
+            <button id="salirBtn">Cerrar sesión</button>
+
+            <p id="adminMensaje"></p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>Imperio Potato © 2026 | Rey Potato IV</p>
+    <p>Biblioteca Jurídica Oficial</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+<script src="script.js"></script>
+
+</body>
+</html>
