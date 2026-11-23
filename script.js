@@ -31,6 +31,8 @@ async function cargarArticulos() {
             if (error) throw error;
 
             todosLosArticulos.push(...(data || []));
+            console.log("TANDA:", data.length);
+console.log("TOTAL ACUMULADO:", todosLosArticulos.length);
 
             if (!data || data.length < tamanoLote) {
                 break;
@@ -41,6 +43,7 @@ async function cargarArticulos() {
 
         console.log("TOTAL DE ARTÍCULOS CARGADOS:", todosLosArticulos.length);
 mostrarArticulos(todosLosArticulos);
+        console.log("TOTAL ENVIADO A MOSTRAR:", todosLosArticulos.length);
 
     } catch (error) {
         resultados.textContent = "Error al cargar los artículos.";
