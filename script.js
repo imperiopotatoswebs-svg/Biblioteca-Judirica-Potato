@@ -30,46 +30,37 @@ async function cargarArticulos() {
 }
 
 // MOSTRAR ARTICULOS
-function mostrarArticulos(lista) {
-    resultados.innerHTML = "";
 
-    if (lista.length === 0) {
-        resultados.textContent = "No se encontraron artículos.";
-        return;
-    }
+async function cargarArticulos() {
+    const todosLosArticulos = [];
+    const tamanoLote = 1000;
+    let desde = 0;
 
-    lista.forEach(articulo => {
-        const tarjeta = document.createElement("div");
-        tarjeta.className = "articulo";
+    try {
+        while (true) {
+            const { data, error } = await db
+                .from("articulos")
+                .select("*")
+                .order("numero", { ascending: true })
+                .range(desde, desde + tamanoLote - 1);
 
-        const titulo = document.createElement("h3");
-        titulo.textContent = "Artículo " + articulo.numero;
+            if (error) throw error;
 
-        const nombre = document.createElement("h4");
-        nombre.textContent = articulo.titulo;
+            todosLosArticulos.push(...(data || []));
 
-        const categoria = document.createElement("p");
-        categoria.textContent = "Categoría: " + articulo.categoria;
+            if (!data || data.length < tamanoLote) {
+                break;
+            }
 
-        const contenido = document.createElement("p");
-        contenido.textContent = articulo.contenido;
-
-        tarjeta.append(titulo, nombre, categoria, contenido);
-
-        if (esAdministrador) {
-            const editar = document.createElement("button");
-            editar.textContent = "Editar";
-            editar.onclick = () => editarArticulo(articulo);
-
-            const eliminar = document.createElement("button");
-            eliminar.textContent = "Eliminar";
-            eliminar.onclick = () => eliminarArticulo(articulo.id);
-
-            tarjeta.append(editar, eliminar);
+            desde += tamanoLote;
         }
 
-        resultados.appendChild(tarjeta);
-    });
+        mostrarArticulos(todosLosArticulos);
+
+    } catch (error) {
+        resultados.textContent = "Error al cargar los artículos.";
+        console.error(error);
+    }
 }
 
 // BUSCADOR
