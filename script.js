@@ -14,22 +14,6 @@ let esAdministrador = false;
 let articuloEditando = null;
 
 // CARGAR ARTICULOS
-async function cargarArticulos() {
-    const { data, error } = await db
-        .from("articulos")
-        .select("*")
-        .order("numero", { ascending: true });
-
-    if (error) {
-        resultados.textContent = "Error al cargar los artículos.";
-        console.error(error);
-        return;
-    }
-
-    mostrarArticulos(data || []);
-}
-
-// MOSTRAR ARTICULOS
 
 async function cargarArticulos() {
     const todosLosArticulos = [];
@@ -63,26 +47,49 @@ async function cargarArticulos() {
     }
 }
 
-// BUSCADOR
-buscador.addEventListener("input", async () => {
-    const { data, error } = await db
-        .from("articulos")
-        .select("*")
-        .order("numero");
 
-    if (error) return;
+// MOSTRAR ARTICULOS
+function mostrarArticulos(lista) {
+    resultados.innerHTML = "";
 
-    const texto = buscador.value.toLowerCase().trim();
+    if (lista.length === 0) {
+        resultados.textContent = "No se encontraron artículos.";
+        return;
+    }
 
-    const filtrados = (data || []).filter(a =>
-        String(a.numero).includes(texto) ||
-        a.titulo.toLowerCase().includes(texto) ||
-        a.contenido.toLowerCase().includes(texto) ||
-        (a.categoria || "").toLowerCase().includes(texto)
-    );
+    lista.forEach(articulo => {
+        const tarjeta = document.createElement("div");
+        tarjeta.className = "articulo";
 
-    mostrarArticulos(filtrados);
-});
+        const titulo = document.createElement("h3");
+        titulo.textContent = "Artículo " + articulo.numero;
+
+        const nombre = document.createElement("h4");
+        nombre.textContent = articulo.titulo;
+
+        const categoria = document.createElement("p");
+        categoria.textContent = "Categoría: " + articulo.categoria;
+
+        const contenido = document.createElement("p");
+        contenido.textContent = articulo.contenido;
+
+        tarjeta.append(titulo, nombre, categoria, contenido);
+
+        if (esAdministrador) {
+            const editar = document.createElement("button");
+            editar.textContent = "Editar";
+            editar.onclick = () => editarArticulo(articulo);
+
+            const eliminar = document.createElement("button");
+            eliminar.textContent = "Eliminar";
+            eliminar.onclick = () => eliminarArticulo(articulo.id);
+
+            tarjeta.append(editar, eliminar);
+        }
+
+        resultados.appendChild(tarjeta);
+    });
+}
 
 // COMPROBAR ADMINISTRADOR
 async function comprobarAdministrador(usuario) {
