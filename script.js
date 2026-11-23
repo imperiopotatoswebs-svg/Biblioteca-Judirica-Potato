@@ -39,7 +39,8 @@ async function cargarArticulos() {
             desde += tamanoLote;
         }
 
-        mostrarArticulos(todosLosArticulos);
+        console.log("TOTAL DE ARTÍCULOS CARGADOS:", todosLosArticulos.length);
+mostrarArticulos(todosLosArticulos);
 
     } catch (error) {
         resultados.textContent = "Error al cargar los artículos.";
